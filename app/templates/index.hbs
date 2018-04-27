@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">JsonapiFiddle</a>
+  {{run-button fiddleSrc=model.currentFiddleSrc}}
+</nav>
+
+<main role="main" class="container-fluid">
+  <div class="row">
+    <div class="col">
+      {{code-editor fiddleSrc=model.currentFiddleSrc}}
+    </div>
+    <div class="col">
+      {{code-result fiddleSrc=model.currentFiddleSrc}}
+    </div>
+  </div>
+</main>

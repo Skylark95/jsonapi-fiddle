@@ -1,5 +1,21 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="#">JsonapiFiddle</a>
+</nav>
 
-{{outlet}}
+<main role="main" class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <h5>JavaScript source</h5>
+      <div class="border">
+        {{ivy-codemirror options=(hash lineNumbers=true mode="javascript")}}
+      </div>
+    </div>
+    <div class="col">
+      <h5>Result</h5>
+      <div class="border">
+        <iframe class="w-100"></iframe>
+      </div>
+    </div>
+  </div>
+</main>
+<!-- /.container -->

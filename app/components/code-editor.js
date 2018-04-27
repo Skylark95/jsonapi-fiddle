@@ -1,6 +1,6 @@
-import Controller from '@ember/controller';
+import Component from '@ember/component';
 import { storageFor } from 'ember-local-storage';
 
-export default Controller.extend({
+export default Component.extend({
   codeHistory: storageFor('code-history')
 });

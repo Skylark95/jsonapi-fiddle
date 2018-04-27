@@ -1,20 +1,15 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
   <a class="navbar-brand" href="#">JsonapiFiddle</a>
+  {{run-button}}
 </nav>
 
 <main role="main" class="container-fluid">
   <div class="row">
     <div class="col">
-      <h5>JavaScript source</h5>
-      <div class="border">
-        {{ivy-codemirror value=codeHistory.current valueUpdated=(action (mut codeHistory.current)) options=(hash lineNumbers=true mode="javascript")}}
-      </div>
+      {{code-editor}}
     </div>
     <div class="col">
-      <h5>Result</h5>
-      <div class="border">
-        <iframe class="w-100"></iframe>
-      </div>
+      {{code-result}}
     </div>
   </div>
 </main>

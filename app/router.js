@@ -7,6 +7,7 @@ const Router = EmberRouter.extend({
 });
 
 Router.map(function() {
+  this.route('fiddle', { path: '/fiddle/:fiddle_id' });
 });
 
 export default Router;

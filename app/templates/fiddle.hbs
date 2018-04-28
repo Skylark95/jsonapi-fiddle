@@ -1,8 +1,8 @@
-{{fiddle-nav saveFiddle=(action "saveFiddle")}}
+{{fiddle-nav saveFiddle=(action "saveFiddle") alertInfo=alertInfo saveDisabled=saveDisabled}}
 <main role="main" class="container-fluid">
   <div class="row">
     <div class="col">
-      {{code-editor title="Javascript source" sourceText=model.javascript}}
+      {{code-editor title="Javascript source" sourceText=model.javascript valueUpdated=(action "enableSave")}}
     </div>
     <div class="col">
       {{code-result title="Result"}}

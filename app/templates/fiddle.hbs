@@ -2,10 +2,10 @@
 <main role="main" class="container-fluid">
   <div class="row">
     <div class="col">
-      {{code-editor title="Javascript" sourceText=model.javascript valueUpdated=(action "enableSave")}}
+      {{code-editor title="Javascript" sourceText=model.javascript valueUpdated=(action "enableSave") height=height}}
     </div>
     <div class="col">
-      {{code-result title="Result" sourceText=model.javascript runCount=runCount}}
+      {{code-result title="Result" sourceText=model.javascript runCount=runCount height=height}}
     </div>
   </div>
 </main>

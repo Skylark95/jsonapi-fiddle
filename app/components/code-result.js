@@ -2,13 +2,30 @@ import Component from '@ember/component';
 import { observer } from '@ember/object';
 
 export default Component.extend({
-  resultChanged: observer('runCount', function () {
-    let element = this.get('element'),
-      sourceText = this.get('sourceText'),
-      iframe = document.createElement('iframe');
+  runCount: 0,
+  sourceText: '',
+  iframe: null,
+
+  runCountChange: observer('runCount', function () {
+    this.createIframe(this.get('sourceText'));
+  }),
+
+  heightChange: observer('height', function() {
+    let iframe = this.get('iframe');
+    iframe.height = this.get('height');
+  }),
+  
+  didInsertElement() {
+    this.createIframe('');
+  },
+
+  createIframe(sourceText) {
+    let element = this.get('element');
+    let iframe = document.createElement('iframe');
 
     iframe.classList = 'w-100';
     iframe.sandbox = 'allow-scripts allow-forms allow-modals';
+    iframe.height = this.get('height');
 
     iframe.srcdoc = `
       <html>
@@ -17,7 +34,12 @@ export default Component.extend({
         </body>
       </html>`;
 
-    element.removeChild(element.querySelector('iframe'));
+    let oldiframe = element.querySelector('iframe')
+    if (oldiframe) {
+      element.removeChild(oldiframe);
+    }
     element.appendChild(iframe);
-  })
+    this.set('iframe', iframe);
+  },
+
 });

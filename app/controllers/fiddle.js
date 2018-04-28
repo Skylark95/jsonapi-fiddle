@@ -1,9 +1,26 @@
 import Controller from '@ember/controller';
+import { computed } from '@ember/object';
 
 export default Controller.extend({
   alertInfo: '',
   saveDisabled: false,
   runCount: 0,
+  yOffset: 120,
+  innerHeight: window.innerHeight,
+
+  height: computed('yOffset', 'innerHeight', function() {
+    let yOffset = this.get('yOffset');
+    let innerHeight = this.get('innerHeight');
+    return innerHeight - yOffset;
+  }),
+
+  init() {
+    this._super(...arguments);
+    this.get('resizeService').on('didResize', () => {
+      this.set('innerHeight', window.innerHeight);
+    });
+  },
+
   actions: {
     saveFiddle() {
       this.set('saveDisabled', true);

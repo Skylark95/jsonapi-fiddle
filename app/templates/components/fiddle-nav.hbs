@@ -2,10 +2,10 @@
   <a class="navbar-brand" href="#">JsonapiFiddle</a>
   <ul class="nav">
     <li class="nav-item">
-      {{save-button class="nav-link p-2" saveFn=(action saveFiddle) disabled=saveDisabled}}
+      {{save-button class="nav-link p-2" save=(action save) disabled=saveDisabled}}
     </li>
     <li class="nav-item">
-      {{run-button class="nav-link p-2"}}
+      {{run-button class="nav-link p-2" run=(action run)}}
     </li>
     {{#if alertInfo}} 
       <li class="nav-item">

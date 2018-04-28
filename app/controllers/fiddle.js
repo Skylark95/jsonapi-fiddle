@@ -3,6 +3,7 @@ import Controller from '@ember/controller';
 export default Controller.extend({
   alertInfo: '',
   saveDisabled: false,
+  runCount: 0,
   actions: {
     saveFiddle() {
       this.set('saveDisabled', true);
@@ -16,6 +17,12 @@ export default Controller.extend({
     },
     enableSave() {
       this.set('saveDisabled', false);
+    },
+    runFiddle() {
+      if (!this.get('saveDisabled')) {
+        this.send('saveFiddle');
+      }
+      this.incrementProperty('runCount');
     }
   }
 });

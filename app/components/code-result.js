@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import { observer } from '@ember/object';
+import ENV from 'jsonapi-fiddle/config/environment';
 
 export default Component.extend({
   runCount: 0,
@@ -27,8 +28,18 @@ export default Component.extend({
     iframe.sandbox = 'allow-scripts allow-forms allow-modals';
     iframe.height = this.get('height');
 
+    let scriptTags = '';
+    if (ENV.APP.externalLibraries) {
+      ENV.APP.externalLibraries.forEach((lib) => {
+        scriptTags += `<script src="${lib}"></script>`
+      });
+    }
+
     iframe.srcdoc = `
       <html>
+        <head>
+          ${scriptTags}
+        </head>
         <body>
           <script>${sourceText}</script>
         </body>

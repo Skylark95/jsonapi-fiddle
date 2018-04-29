@@ -28,11 +28,11 @@ module.exports = function(environment) {
   };
   
   ENV.APP.externalLibraries = [
-    'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js',
-    `${ENV.rootURL}jsonapi.js`
+    'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'
   ];
 
   if (environment === 'development') {
+    ENV.APP.externalLibraries.push('/assets/jsonapi.js');
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
     // ENV.APP.LOG_TRANSITIONS = true;
@@ -54,7 +54,8 @@ module.exports = function(environment) {
 
   if (environment === 'production') {
     // here you can enable a production-specific feature
-    ENV.baseURL = '/jsonapi-fiddle';
+    ENV.rootURL = '/jsonapi-fiddle';
+    ENV.APP.externalLibraries.push('/jsonapi-fiddle/assets/jsonapi.js');
     ENV.locationType = 'hash';
   }
 

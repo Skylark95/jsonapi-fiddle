@@ -11,6 +11,9 @@ module.exports = function(defaults) {
     },
     codemirror: {
       modes: ['javascript']
+    },
+    fingerprint: {
+      exclude: ['assets/jsonapi.js']
     }
   });
 

@@ -41,7 +41,12 @@ export default Component.extend({
           ${scriptTags}
         </head>
         <body>
-          <script>${sourceText}</script>
+          <script>
+            async function run() {
+              ${sourceText}
+            }
+            run();
+          </script>
         </body>
       </html>`;
 

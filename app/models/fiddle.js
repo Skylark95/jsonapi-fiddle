@@ -12,7 +12,7 @@ export default DS.Model.extend({
  * This sample will work with the endpoints example project
  * https://github.com/endpoints/endpoints-example
  *
- * Note that all saved fiddles are only saved to your brower's
+ * Note that all saved fiddles are only saved to your browser's
  * local storage and cannot be shared at this time.
  */ 
 

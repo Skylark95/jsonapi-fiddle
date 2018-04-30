@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>public/assets/jsonapi.js - JsonapiFiddle</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min-ecd4a5d6c0cbee10b168f6aa000c64ea.css" integrity="sha256-HS1ihgXZ6qfUcS5BTehJhV81EZR+I5Q6zx5yGdEqbp0= sha512-T23C9FH3sSw+W00kbZbvWt8h/P1h8Euj3cklmPSZNeyGekNivnCvp7KKIFju5D3blaYVmVaD0oAjbS2c+J+huQ==" >
+    <link rel="stylesheet" href="../assets/css/main-cfb9e6d6ca8c917378689c79497b5ab1.css" id="site_styles" integrity="sha256-yppv0GjmmP6sSTuQtC7+9/nvYSywFGGKNNkXuAWTdUg= sha512-py5ijfAJskNf72Ljw0X8vBdqUTNdQ1r5fj7bSCIuIFZ1u1kEB0aR02f9pT2b5jwjAmwCuti6feiU6FEQyW/arA==" >
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo-193e7be45d25d060c49d10d2247c9d18.png" title="JsonapiFiddle" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: 0.0.1</em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/Jsonapi.html">Jsonapi</a></li>
+                                <li><a href="../classes/JsonapiDocument.html">JsonapiDocument</a></li>
+                            </ul>
+                
+                
+                            <ul id="api-modules" class="apis modules">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: public/assets/jsonapi.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+/**
+ * Jsonapi class for JsonapiFiddle. Contains helper methods for interacting with a
+ * JSON API (http://jsonapi.org/) service.
+ * 
+ * @class Jsonapi
+ * @constructor 
+ * @param {Object} options an options object with the following configuration options:
+ * &lt;ul&gt;
+ * &lt;li&gt;&lt;code&gt;BaseURL&lt;/code&gt; (Required): The base URL to use for the JSON API service to be called&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;headers&lt;/code&gt; (Optional): An object of key value pairs to use for headers to send&lt;/li&gt;
+ * &lt;li&gt;&lt;code&gt;withCredentials&lt;/code&gt; (Optional): Specify if request should be with with xhr withCredentials (default false)
+ * &lt;/ul&gt;
+ */
+class Jsonapi {
+
+  constructor(options) {
+    this.options = options;
+    this.options.headers = options.headers || {};
+    this.options.headers = Object.assign(this.options.headers, {
+      &quot;Content-Type&quot;: &quot;application/vnd.api+json&quot;,
+      &quot;Accept&quot;: &quot;application/vnd.api+json, application/json, */*&quot;
+    });
+
+    this.results = document.querySelectorAll(&#x27;[data-jsonapi-results]&#x27;);
+    if (this.results.length === 0) {
+      this.results = document.createElement(&#x27;div&#x27;);
+      this.results.setAttribute(&#x27;data-jsonapi-results&#x27;, &#x27;&#x27;);
+      document.querySelector(&#x27;body&#x27;).appendChild(this.results);
+    }
+  }
+
+  /**
+   * 
+   * @method _addResult
+   * @private
+   * @param {String} method 
+   * @param {String} statusCode 
+   * @param {String} statusText 
+   * @param {Object} resultData 
+   * @param {String} url 
+   */
+  _addResult(method, statusCode, statusText, resultData, url) {
+    let result = document.createElement(&#x27;div&#x27;);
+    let resultUrl = url;
+    if (resultData &amp;&amp; resultUrl.indexOf(resultData.data.id) === -1) {
+      resultUrl += &#x60;/${resultData.data.id}&#x60;;
+    }
+    result.setAttribute(&#x27;data-jsonapi-result&#x27;, &#x27;&#x27;);
+    result.innerText = &#x60;${method} - ${statusCode} ${statusText}: &#x60;;
+
+    let a = document.createElement(&#x27;a&#x27;);
+    a.setAttribute(&#x27;href&#x27;, resultUrl);
+    a.setAttribute(&#x27;target&#x27;, &#x27;_blank&#x27;);
+    a.innerText = resultUrl;
+    result.appendChild(a);
+
+    console.log(&#x60;${result.innerText}&#x60;);
+    if (resultData) {
+      console.log(resultData);
+    } this.results.appendChild(result);
+  }
+
+  /**
+   * Makes an ajax request.
+   * @method ajax
+   * @param {String} method HTTP method
+   * @param {String} resource JSON API resource type
+   * @param {JsonapiDocument} request JsonapiDocument to use for the request
+   * @returns {Promise} A Promise that will be resolved upon success with a JsonapiDocument or a jQuery jqXHR object on failure (except for method DELETE)
+   */
+  ajax(method, resource, request) {
+    let me = this;
+    let options = this.options;
+    let data = { data: request ? request.data : {} };
+    let url = &#x60;${options.baseURL}/${resource}&#x60;;
+
+    if (method.toUpperCase() === &#x27;GET&#x27; || method.toUpperCase() === &#x27;DELETE&#x27;) {
+      data = undefined;
+    }
+
+    return new Promise((resolve, reject) =&gt; {
+      $.ajax({
+        url: url,
+        method: method,
+        dataType: &#x27;json&#x27;,
+        crossDomain: true,
+        headers: options.headers,
+        xhrFields: {
+          withCredentials: options.withCredentials
+        },
+        data: JSON.stringify(data),
+        success: function (result, status, xhr) {
+          let statusCode = xhr.status;
+          let statusText = xhr.statusText;
+          me._addResult(method, statusCode, statusText, result, url)
+
+          if (result) {
+            resolve(new JsonapiDocument(result.data));
+          } else {
+            resolve();
+          }
+        },
+        error: function (xhr) {
+          console.error(&#x60;${xhr.status} ${xhr.statusText}: ${url}&#x60;);
+          console.error(xhr);
+          reject(xhr);
+        }
+      });
+    });
+  }
+
+  /**
+   * Makes a HTTP GET request to the JSON API service
+   * @method get
+   * @param {*} resource The JSON API resource type as a String OR a JsonapiDocument.
+   * @param {String} resourceId The id of the JSON API resource to retrieve. Only required if &lt;code&gt;resource&lt;/code&gt; is a String.
+   * @returns {Promise} A Promise that will be resolved upon success with a JsonapiDocument or a jQuery jqXHR object on failure
+   */
+  get(resource, resourceId) {
+    let type = resource.data ? resource.data.type : resource;
+    let id = resource.data ? resource.data.id : resourceId;
+    return this.ajax(&#x27;GET&#x27;, &#x60;${type}/${id}&#x60;);
+  }
+
+  /**
+   * Makes a HTTP DELETE request to the JSON API service
+   * @method delete
+   * @param {*} resource The JSON API resource type as a String OR a JsonapiDocument.
+   * @param {String} resourceId The id of the JSON API resource to delete. Only required if &lt;code&gt;resource&lt;/code&gt; is a String.
+   */
+  delete(resource, resourceId) {
+    let type = resource.data ? resource.data.type : resource;
+    let id = resource.data ? resource.data.id : resourceId;
+    return this.ajax(&#x27;DELETE&#x27;, &#x60;${type}/${id}&#x60;);
+  }
+
+  /**
+   * Makes a HTTP POST request to the JSON API service
+   * @method post 
+   * @param {JsonapiDocument} request the JsonapiDocument to post
+   * @returns {Promise} A Promise that will be resolved upon success with a JsonapiDocument or a jQuery jqXHR object on failure
+   */
+  post(request) {
+    return this.ajax(&#x27;POST&#x27;, request.data.type, request);
+  }
+
+  /**
+   * Makes a HTTP PATCH request to the JSON API service
+   * @method patch
+   * @param {JsonapiDocument} request the JsonapiDocument to patch
+   * @returns {Promise} A Promise that will be resolved upon success with a JsonapiDocument or a jQuery jqXHR object on failure
+   */
+  patch(request) {
+    return this.ajax(&#x27;PATCH&#x27;, &#x60;${request.data.type}/${request.data.id}&#x60;, request);
+  }
+
+  /**
+   * Creates a new JsonapiDocument
+   * @method createDocument
+   * @param {Object} data The JSON API data member. 
+   * This object may consist of &lt;code&gt;type&lt;/code&gt;, &lt;code&gt;id&lt;/code&gt;, &lt;code&gt;attributes&lt;/code&gt;, and &lt;code&gt;relationships&lt;/code&gt;
+   */
+  createDocument(data) {
+    return new JsonapiDocument(data);
+  }
+}
+
+/**
+ * JsonapiDocument class for JsonapiFiddle. Contains helper methods for interacting with a JSON API (http://jsonapi.org) document.
+ * @class JsonapiDocument
+ * @constructor
+ * @param {Object} data The JSON API data member. 
+ * This object may consist of &lt;code&gt;type&lt;/code&gt;, &lt;code&gt;id&lt;/code&gt;, &lt;code&gt;attributes&lt;/code&gt;, and &lt;code&gt;relationships&lt;/code&gt;
+ */
+class JsonapiDocument {
+  constructor(data) {
+    this.data = data || {};
+    if (!this.data.attributes) {
+      this.data.attributes = {};
+    }
+    if (!this.data.relationships) {
+      this.data.relationships = {};
+    }
+  }
+
+  /**
+   * Shortcut method to get &lt;code&gt;data.type&lt;/code&gt; 
+   * @method getType
+   * @returns {String} data.type
+   */
+  getType() {
+    return this.data.type;
+  }
+
+  /**
+   * Shortcut method to set &lt;code&gt;data.type&lt;/code&gt; 
+   * @method setType
+   * @param {String} type data.type
+   */
+  setType(type) {
+    this.data.type = type;
+  }
+
+  /**
+   * Shortcut method to add or update attributes to &lt;code&gt;data.attributes&lt;/code&gt;
+   * without removing existing attributes.
+   * @method addAttributes
+   * @param {Object} attributes the attributes to add
+   */
+  addAttributes(attributes) {
+    this.data.attributes = Object.assign(this.data.attributes, attributes);
+  }
+
+  /**
+   * Shortcut method to remove attributes from &lt;code&gt;data.attributes&lt;/code&gt;
+   * @method removeAttributes
+   * @param {Array} attributes an array of attribute names to remove
+   */
+  removeAttributes(attributes) {
+    attributes.forEach(attr =&gt; {
+      delete this.data.attributes[attr];
+    });
+  }
+
+  /**
+   * Shortcut method to add or update relationships to &lt;code&gt;data.relationships&lt;/code&gt;
+   * without removing existing relationships
+   * @method addRelationships
+   * @param {Object} relationships the relationships to add
+   */
+  addRelationships(relationships) {
+    this.data.relationships = Object.assign(this.data.relationships, relationships);
+  }
+
+  /**
+   * Shortcut method to remove relationships from &lt;code&gt;data.relationships&lt;/code&gt;
+   * @method removeRelationships
+   * @param {Array} relationships an array of the relationship names to remove
+   */
+  removeRelationships(relationships) {
+    relationships.forEach(rel =&gt; {
+      delete this.data.relationships[rel];
+    });
+  }
+
+  /**
+   * Shortcut method to get &lt;code&gt;data.id&lt;/code&gt;
+   * @method getId
+   * @returns {String} data.id
+   */
+  getId() {
+    return this.data.id;
+  }
+
+  /**
+   * Shortcut method to set &lt;code&gt;data.id&lt;/code&gt;
+   * @method setId
+   * @param {String} id data.id
+   */
+  setId(id) {
+    this.data.id = id;
+  }
+}
+
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min-ba58633b4a161f3698cc75eb07caca86.js" integrity="sha256-ZMxAmgNuHIDrPoiYH36E3/uF1mPU3cyoK+5YL2857UA= sha512-YBcG8wCpgjeIWhFmKH/RncP3P/nmNhzTkN+qGnDG7oCGg47h17443WvwTgfC2q1Zck+ERxBr5whvDn1JDuloRQ==" ></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify-d7e0f20896cc40e4556cadc45ef5cd9b.js" integrity="sha256-wpD9zc98vHMqcDh9mOSEGxvq6UaJFqBXhsS0pBry9IA= sha512-VSIwwZ2WDHJVm4ukXuTwPwyaDXR2fog0GEbzJ1XPbXik+stOXWn7x8+rPl/E3/9prhvEiAKaYHQ1GDp2qTjrXQ==" ></script>
+<script src="../assets/../api-21592e9ee8b54d4f4c97083751767a10.js" integrity="sha256-1TaSzYOECG/UVblplJXbHGvcowCmlCG1KZ7RMmWAWx0= sha512-b/5JK+gbDdXUd8KZKwQuliic5ngxp+DPTaljBLCtoPC+qCNuKm5JKe29yhbLrqFDbPN6CSeEeq04YLZoLrjWHQ==" ></script>
+<script src="../assets/js/api-filter-aef908d8b2a3ddfc5eb923ca0dd4dfef.js" integrity="sha256-yKECOxz4n6rdt3Q9NlbsTawiMA0flIWLLDbX9STxGDs= sha512-Ht++6LPujL+FFuXhxWwe1xQgt24AHUJxKX7JLsmUscfMUSE28juuSA+dRffIcAgHdzBEoySVHM2ER4AJy7g7jw==" ></script>
+<script src="../assets/js/api-list-b230bf013183003dfb2f3928062279ff.js" integrity="sha256-6kozur01UBCy213oRVe9dlkfamAa3uu2AKNAZ8qhs5g= sha512-KUyWUBO4gFeFPAnp9MOtVCcGXtVloNp3a6K7x5Qvn3AYV+hl5LCcTiThtg0N+JUR16pz5b5Xw8ijlbSPYAniaw==" ></script>
+<script src="../assets/js/api-search-67a95e70577083ec18b3cf68d9d5a926.js" integrity="sha256-CCgpuNsJac19jOKfMb/8PBoD6J4V/B/0KI7tZRAK5aE= sha512-g0QCwY4JLkxC7Lco0+Ivv3vSBIhspBppYNtkr3KTMhdqH+yqaB+Py1xmWYZHQ9Zo5otU9A1w0CQJFp+jAvuCxQ==" ></script>
+<script src="../assets/js/apidocs-974b8725514921c8bf3080a00ebb4364.js" integrity="sha256-mfXETx/9yndYHitf4RN8sjdvgsFw7N6o/pXYKaGWIZo= sha512-OybO6mtjLNi4+ADfPu4MX4SgFfDe4QXJnL7Wt24DgOa+yb9AEh7qHq8YCMe2mzme2zvqU5NWHJnfDlahldSqoQ==" ></script>
+</body>
+</html>

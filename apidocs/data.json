@@ -1,0 +1,368 @@
+{
+    "project": {
+        "name": "JsonapiFiddle",
+        "description": "A JSFiddle for JSON API (http://jsonapi.org/)",
+        "version": "0.0.1",
+        "url": "https://github.com/Skylark95/jsonapi-fiddle"
+    },
+    "files": {
+        "public/assets/jsonapi.js": {
+            "name": "public/assets/jsonapi.js",
+            "modules": {},
+            "classes": {
+                "Jsonapi": 1,
+                "JsonapiDocument": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        }
+    },
+    "modules": {},
+    "classes": {
+        "Jsonapi": {
+            "name": "Jsonapi",
+            "shortname": "Jsonapi",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/assets/jsonapi.js",
+            "line": 1,
+            "description": "Jsonapi class for JsonapiFiddle. Contains helper methods for interacting with a\nJSON API (http://jsonapi.org/) service.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "options",
+                    "description": "an options object with the following configuration options:\n<ul>\n<li><code>BaseURL</code> (Required): The base URL to use for the JSON API service to be called</li>\n<li><code>headers</code> (Optional): An object of key value pairs to use for headers to send</li>\n<li><code>withCredentials</code> (Optional): Specify if request should be with with xhr withCredentials (default false)\n</ul>",
+                    "type": "Object"
+                }
+            ]
+        },
+        "JsonapiDocument": {
+            "name": "JsonapiDocument",
+            "shortname": "JsonapiDocument",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "file": "public/assets/jsonapi.js",
+            "line": 168,
+            "description": "JsonapiDocument class for JsonapiFiddle. Contains helper methods for interacting with a JSON API (http://jsonapi.org) document.",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "data",
+                    "description": "The JSON API data member. \nThis object may consist of <code>type</code>, <code>id</code>, <code>attributes</code>, and <code>relationships</code>",
+                    "type": "Object"
+                }
+            ]
+        }
+    },
+    "elements": {},
+    "classitems": [
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 32,
+            "itemtype": "method",
+            "name": "_addResult",
+            "access": "private",
+            "tagname": "",
+            "params": [
+                {
+                    "name": "method",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "statusCode",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "statusText",
+                    "description": "",
+                    "type": "String"
+                },
+                {
+                    "name": "resultData",
+                    "description": "",
+                    "type": "Object"
+                },
+                {
+                    "name": "url",
+                    "description": "",
+                    "type": "String"
+                }
+            ],
+            "class": "Jsonapi"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 63,
+            "description": "Makes an ajax request.",
+            "itemtype": "method",
+            "name": "ajax",
+            "params": [
+                {
+                    "name": "method",
+                    "description": "HTTP method",
+                    "type": "String"
+                },
+                {
+                    "name": "resource",
+                    "description": "JSON API resource type",
+                    "type": "String"
+                },
+                {
+                    "name": "request",
+                    "description": "JsonapiDocument to use for the request",
+                    "type": "JsonapiDocument"
+                }
+            ],
+            "return": {
+                "description": "A Promise that will be resolved upon success with a JsonapiDocument or a jQuery jqXHR object on failure (except for method DELETE)",
+                "type": "Promise"
+            },
+            "class": "Jsonapi"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 112,
+            "description": "Makes a HTTP GET request to the JSON API service",
+            "itemtype": "method",
+            "name": "get",
+            "params": [
+                {
+                    "name": "resource",
+                    "description": "The JSON API resource type as a String OR a JsonapiDocument.",
+                    "type": "*"
+                },
+                {
+                    "name": "resourceId",
+                    "description": "The id of the JSON API resource to retrieve. Only required if <code>resource</code> is a String.",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "A Promise that will be resolved upon success with a JsonapiDocument or a jQuery jqXHR object on failure",
+                "type": "Promise"
+            },
+            "class": "Jsonapi"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 125,
+            "description": "Makes a HTTP DELETE request to the JSON API service",
+            "itemtype": "method",
+            "name": "delete",
+            "params": [
+                {
+                    "name": "resource",
+                    "description": "The JSON API resource type as a String OR a JsonapiDocument.",
+                    "type": "*"
+                },
+                {
+                    "name": "resourceId",
+                    "description": "The id of the JSON API resource to delete. Only required if <code>resource</code> is a String.",
+                    "type": "String"
+                }
+            ],
+            "class": "Jsonapi"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 137,
+            "description": "Makes a HTTP POST request to the JSON API service",
+            "itemtype": "method",
+            "name": "post",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "the JsonapiDocument to post",
+                    "type": "JsonapiDocument"
+                }
+            ],
+            "return": {
+                "description": "A Promise that will be resolved upon success with a JsonapiDocument or a jQuery jqXHR object on failure",
+                "type": "Promise"
+            },
+            "class": "Jsonapi"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 147,
+            "description": "Makes a HTTP PATCH request to the JSON API service",
+            "itemtype": "method",
+            "name": "patch",
+            "params": [
+                {
+                    "name": "request",
+                    "description": "the JsonapiDocument to patch",
+                    "type": "JsonapiDocument"
+                }
+            ],
+            "return": {
+                "description": "A Promise that will be resolved upon success with a JsonapiDocument or a jQuery jqXHR object on failure",
+                "type": "Promise"
+            },
+            "class": "Jsonapi"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 157,
+            "description": "Creates a new JsonapiDocument",
+            "itemtype": "method",
+            "name": "createDocument",
+            "params": [
+                {
+                    "name": "data",
+                    "description": "The JSON API data member. \nThis object may consist of <code>type</code>, <code>id</code>, <code>attributes</code>, and <code>relationships</code>",
+                    "type": "Object"
+                }
+            ],
+            "class": "Jsonapi"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 186,
+            "description": "Shortcut method to get <code>data.type</code>",
+            "itemtype": "method",
+            "name": "getType",
+            "return": {
+                "description": "data.type",
+                "type": "String"
+            },
+            "class": "JsonapiDocument"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 195,
+            "description": "Shortcut method to set <code>data.type</code>",
+            "itemtype": "method",
+            "name": "setType",
+            "params": [
+                {
+                    "name": "type",
+                    "description": "data.type",
+                    "type": "String"
+                }
+            ],
+            "class": "JsonapiDocument"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 204,
+            "description": "Shortcut method to add or update attributes to <code>data.attributes</code>\nwithout removing existing attributes.",
+            "itemtype": "method",
+            "name": "addAttributes",
+            "params": [
+                {
+                    "name": "attributes",
+                    "description": "the attributes to add",
+                    "type": "Object"
+                }
+            ],
+            "class": "JsonapiDocument"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 214,
+            "description": "Shortcut method to remove attributes from <code>data.attributes</code>",
+            "itemtype": "method",
+            "name": "removeAttributes",
+            "params": [
+                {
+                    "name": "attributes",
+                    "description": "an array of attribute names to remove",
+                    "type": "Array"
+                }
+            ],
+            "class": "JsonapiDocument"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 225,
+            "description": "Shortcut method to add or update relationships to <code>data.relationships</code>\nwithout removing existing relationships",
+            "itemtype": "method",
+            "name": "addRelationships",
+            "params": [
+                {
+                    "name": "relationships",
+                    "description": "the relationships to add",
+                    "type": "Object"
+                }
+            ],
+            "class": "JsonapiDocument"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 235,
+            "description": "Shortcut method to remove relationships from <code>data.relationships</code>",
+            "itemtype": "method",
+            "name": "removeRelationships",
+            "params": [
+                {
+                    "name": "relationships",
+                    "description": "an array of the relationship names to remove",
+                    "type": "Array"
+                }
+            ],
+            "class": "JsonapiDocument"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 246,
+            "description": "Shortcut method to get <code>data.id</code>",
+            "itemtype": "method",
+            "name": "getId",
+            "return": {
+                "description": "data.id",
+                "type": "String"
+            },
+            "class": "JsonapiDocument"
+        },
+        {
+            "file": "public/assets/jsonapi.js",
+            "line": 255,
+            "description": "Shortcut method to set <code>data.id</code>",
+            "itemtype": "method",
+            "name": "setId",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "data.id",
+                    "type": "String"
+                }
+            ],
+            "class": "JsonapiDocument"
+        }
+    ],
+    "warnings": [
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " public/assets/jsonapi.js:63"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " public/assets/jsonapi.js:112"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " public/assets/jsonapi.js:137"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " public/assets/jsonapi.js:147"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " public/assets/jsonapi.js:186"
+        },
+        {
+            "message": "replacing incorrect tag: returns with return",
+            "line": " public/assets/jsonapi.js:246"
+        }
+    ]
+}

@@ -1,9 +1,11 @@
 import Component from '@ember/component';
 import { observer } from '@ember/object';
+import ENV from 'jsonapi-fiddle/config/environment';
 
 export default Component.extend({
-  height: 1110,
+  height: 300,
   editor: null,
+  apidocs: ENV.APP.apidocs,
 
   heightChange: observer('height', function() {
     let editor = this.get('editor');

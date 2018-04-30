@@ -20,16 +20,16 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+      externalLibraries: [
+        'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'
+      ],
+      apidocs: '/apidocs/index.html'
     },
 
     resizeServiceDefaults: {
       injectionFactories: ['controller']
     }
   };
-  
-  ENV.APP.externalLibraries = [
-    'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js'
-  ];
 
   if (environment === 'development') {
     ENV.APP.externalLibraries.push('/assets/jsonapi.js');
@@ -55,6 +55,7 @@ module.exports = function(environment) {
   if (environment === 'production') {
     // here you can enable a production-specific feature
     ENV.rootURL = '/jsonapi-fiddle';
+    ENV.APP.apidocs = 'jsonapi-fiddle/apidocs/index.html'
     ENV.APP.externalLibraries.push('/jsonapi-fiddle/assets/jsonapi.js');
     ENV.locationType = 'hash';
   }

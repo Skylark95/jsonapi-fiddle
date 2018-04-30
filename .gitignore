@@ -3,6 +3,7 @@
 # compiled output
 /dist
 /tmp
+/public/apidocs
 
 # dependencies
 /node_modules

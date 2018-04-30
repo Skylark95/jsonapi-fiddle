@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "url": "https://github.com/Skylark95/jsonapi-fiddle",
     "options": {
-        "outdir": "dist/apidocs",
+        "outdir": "public/apidocs",
         "paths": "public/assets"
     }
 }

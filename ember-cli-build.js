@@ -13,7 +13,7 @@ module.exports = function(defaults) {
       modes: ['javascript']
     },
     fingerprint: {
-      exclude: ['assets/jsonapi.js']
+      exclude: ['assets/jsonapi.js', 'apidocs/**']
     }
   });
 

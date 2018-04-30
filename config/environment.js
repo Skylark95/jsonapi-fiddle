@@ -55,7 +55,7 @@ module.exports = function(environment) {
   if (environment === 'production') {
     // here you can enable a production-specific feature
     ENV.rootURL = '/jsonapi-fiddle';
-    ENV.APP.apidocs = 'jsonapi-fiddle/apidocs/index.html'
+    ENV.APP.apidocs = '/jsonapi-fiddle/apidocs/index.html'
     ENV.APP.externalLibraries.push('/jsonapi-fiddle/assets/jsonapi.js');
     ENV.locationType = 'hash';
   }

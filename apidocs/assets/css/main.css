@@ -453,7 +453,7 @@ h2, h3, h4, h5, h6 {
 /* Loading spinners. */
 #bd.loading .apidocs,
 #api-list.loading .yui3-tabview-panel {
-    background: #fff url(../img/spinner-578c56176140ed9fc9a00ab017d39adb.gif) no-repeat center 70px;
+    background: #fff url(../img/spinner.gif) no-repeat center 70px;
     min-height: 150px;
 }
 

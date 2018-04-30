@@ -16,7 +16,10 @@ class Jsonapi {
   }
   _addResult(method, statusCode, statusText, resultData, url) {
     let result = document.createElement('div');
-    let resultUrl = url.indexOf(resultData.data.id) === -1 ? `${url}/${resultData.data.id}` : url;
+    let resultUrl = url;
+    if (resultData && resultUrl.indexOf(resultData.data.id) === -1) {
+      resultUrl += `/${resultData.data.id}`;
+    }
     result.setAttribute('data-jsonapi-result', '');
     result.innerText = `${method} - ${statusCode} ${statusText}: `;
 
@@ -27,7 +30,9 @@ class Jsonapi {
     result.appendChild(a);
 
     console.log(`${result.innerText}`);
-    console.log(resultData);
+    if (resultData) {
+      console.log(resultData);
+    }
 
     this.results.appendChild(result);
   }
@@ -35,8 +40,13 @@ class Jsonapi {
   ajax(method, resource, request) {
     let me = this;
     let options = this.options;
-    let data = { data: request.data };
+    let data = { data: request ? request.data : {} };
     let url = `${options.baseURL}/${resource}`;
+
+    if (method.toUpperCase() === 'GET' || method.toUpperCase() === 'DELETE') {
+      data = undefined;
+    }
+
     return new Promise((resolve, reject) => {
       $.ajax({
         url: url,
@@ -52,7 +62,12 @@ class Jsonapi {
           let statusCode = xhr.status;
           let statusText = xhr.statusText;
           me._addResult(method, statusCode, statusText, result, url)
-          resolve(new JsonapiDocument(result.data));
+
+          if (result) {
+            resolve(new JsonapiDocument(result.data));
+          } else {
+            resolve();
+          }
         },
         error: function (xhr) {
           console.error(`${xhr.status} ${xhr.statusText}: ${url}`);
@@ -63,8 +78,16 @@ class Jsonapi {
     });
   }
 
-  get(resource, id) {
-    return this.ajax('GET', `${resource}/${id}`);
+  get(resource, resourceId) {
+    let type = resource.data ? resource.data.type : resource;
+    let id = resource.data ? resource.data.id : resourceId;
+    return this.ajax('GET', `${type}/${id}`);
+  }
+
+  delete(resource, resourceId) {
+    let type = resource.data ? resource.data.type : resource;
+    let id = resource.data ? resource.data.id : resourceId;
+    return this.ajax('DELETE', `${type}/${id}`);
   }
 
   post(request) {
@@ -83,8 +106,20 @@ class Jsonapi {
 class JsonapiDocument {
   constructor(data) {
     this.data = data || {};
-    this.data.attributes = data.attributes || {};
-    this.data.relationships = data.relationships || {};
+    if (!this.data.attributes) {
+      this.data.attributes = {};
+    }
+    if (!this.data.relationships) {
+      this.data.relationships = {};
+    }
+  }
+
+  getType() {
+    return this.data.type;
+  }
+
+  setType(type) {
+    this.data.type = type;
   }
 
   addAttributes(attributes) {

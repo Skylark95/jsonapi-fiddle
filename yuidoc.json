@@ -1,0 +1,10 @@
+{
+    "name": "JsonapiFiddle",
+    "description": "A JSFiddle for JSON API (http://jsonapi.org/)",
+    "version": "0.0.1",
+    "url": "https://github.com/Skylark95/jsonapi-fiddle",
+    "options": {
+        "outdir": "dist/apidocs",
+        "paths": "public/assets"
+    }
+}
